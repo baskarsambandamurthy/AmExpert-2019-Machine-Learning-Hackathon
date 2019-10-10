@@ -1,9 +1,9 @@
 ﻿# AmExpert 2019 Machine Learning Hackathon
 ## Score
-Private LB Rank:  13th
-Private LB Score:  0.9273
-Public LB Rank: 18th
-Public LB Score:  0.9361
+- Private LB Rank:  13th
+- Private LB Score:  0.9273
+- Public LB Rank: 18th
+- Public LB Score:  0.9361
 ## Important points for top score achievement
 
  1. Understanding table relationships and performing various merging of the tables
@@ -293,11 +293,8 @@ Code to generate full tfidf features
 def gen_tfidf_fullfeats(raw_cols_to_gen,data_texts):
     tf = TfidfVectorizer(tokenizer=lambda x: x.split(' '))
     for col in raw_cols_to_gen:
-#         print(col)
-        X_tfidf = tf.fit_transform(data_texts[col+'_texts'])
-#         X_tfidf = pd.DataFrame(X_tfidf.todense(), columns = ['tfidf_dense_'+col+str(x) for x in tf.vocabulary_.values()])
-        X_tfidf = pd.DataFrame(X_tfidf.todense(), columns = ['tfidf_dense_'+col+"_"+x for x in tf.get_feature_names()])
-#         print(X_tfidf.shape)
+        tfidf_feats = tf.fit_transform(data_texts[col+'_texts'])
+        tfidf_feats = pd.DataFrame(tfidf_feats .todense(), columns = ['tfidf_dense_'+col+"_"+x for x in tf.get_feature_names()])
         data_texts = pd.concat([data_texts, X_tfidf], axis=1)
     return data_texts
 ```
@@ -327,9 +324,9 @@ def gen_tfidf_topfeats(top_n,raw_cols_to_gen,data_texts):
     tf = TfidfVectorizer(tokenizer=lambda x: x.split(' '))
 
     for col in raw_cols_to_gen:
-        X_tfidf = tf.fit_transform(data_texts[col+'_texts'])
+        tfidf_feats = tf.fit_transform(data_texts[col+'_texts'])
         feature_names = np.array(tf.get_feature_names())
-        topfeatsdata,topvaluesdata = get_top_fulldata(X_tfidf,feature_names,top_n)
+        topfeatsdata,topvaluesdata = get_top_fulldata(tfidf_feats ,feature_names,top_n)
 
         #generate dataframe columns
         for i in range(topfeatsdata.shape[1]):
@@ -452,5 +449,3 @@ def runtimeseries(tr_encs,val_encs,test_encs,params,n_splits,fold_feats,
 
 ### Todo
 - Documentation in the code
-- Explain about usage of H2O tool as part of ensemble 
-
