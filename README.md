@@ -446,6 +446,3 @@ def runtimeseries(tr_encs,val_encs,test_encs,params,n_splits,fold_feats,
 	- Minimum number of iterations
 - 3 different models using full train set is generated using above iterations as estimators for light gbm model and then all these 3 models are blended (ie ensembled) to generate final test predictions. 
 - With this test predictions, the test score in public LB have improved 2 points from 0.91 to 0.93
-
-### Todo
-- Documentation in the code
